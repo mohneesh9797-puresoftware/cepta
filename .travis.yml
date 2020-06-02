@@ -27,52 +27,13 @@ matrix:
       name: Smoke Tests
       env: TEST_TARGET=":smoke"
       os: linux
-
-    # OSX: Smoke Tests
     - stage: Unit Tests
+      arch: arm64
       name: Smoke Tests
-      env: TEST_TARGET=":smoke" TEST_FILTER=-docker
-      os: osx
-
-    # Linux: Unit Tests
-    - stage: Unit Tests
-      name: Unit Tests
-      env: TEST_TARGET=":unit"
+      env: TEST_TARGET=":smoke"
       os: linux
 
-    # OSX: Unit Tests
-    - stage: Unit Tests
-      name: Unit Tests
-      env: TEST_TARGET=":unit" TEST_FILTER=-docker
-      os: osx
-
-    # Linux: Integration Tests
-    - stage: Integration Tests
-      name: Integration Tests
-      env: TEST_TARGET=":integration"
-      os: linux
-
-    # OSX: Integration Tests
-    - stage: Integration Tests
-      name: Integration Tests
-      env: TEST_TARGET=":integration" TEST_FILTER=-docker
-      os: osx
-
-    - stage: deploy
-      name: Deploy to GitHub Pages
-      script: echo "Deploying to GitHub Pages"
-      before_deploy: openssl aes-256-cbc -K $encrypted_189e52c2c347_key -iv $encrypted_189e52c2c347_iv -in deploy_key.enc -out deploy_key -d
-      os: osx
-      deploy:
-        provider: pages
-        local_dir: web
-        skip_cleanup: true
-        verbose: true
-        keep_history: true
-        edge: true
-        deploy_key: deploy_key
-        on:
-          branch: dev
+    
 
 before_install:
   - rm .bazelrc
